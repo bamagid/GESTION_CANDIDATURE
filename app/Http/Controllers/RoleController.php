@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -28,7 +29,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator= Validator::make(
+            $request->all(),[
+                'nomRole'=>'required|unique:roles'
+            ]);
+        $role =Role::create([
+            "nomRole"=>$request->nomRole
+        ]);
+        return response()->json([
+            "message" => "Le role a été ajouté avec succès",
+            "nomRole"=>$role
+        ],201);
     }
 
     /**
@@ -52,7 +63,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+       
     }
 
     /**
@@ -60,6 +71,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return response()->json([
+            "message" => "Le role a été supprimé avec succès"
+    ]);
     }
 }
