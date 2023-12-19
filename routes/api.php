@@ -25,6 +25,8 @@ Route::get('/candidatures/{candidature}', [CandidatureController::class, 'show']
 Route::get('/formations', [FormationController::class, 'index']);
 // Route pour afficher les détails d'une formation spécifique
 Route::get('/formations/{formation}', [FormationController::class, 'show']);
+//connecter un utilisateur 
+Route::post("/login", [UserController::class, 'login']);
 Route::middleware('auth:api')->group(function(){
 /*Route pour la gestion des candidatures */
 // Route pour enregistrer une nouvelle candidature
@@ -57,8 +59,6 @@ Route::resource('roles', RoleController::class);
 /*Route pour la gestion des utilisateurs */
 Route::resource('user', UserController::class);
 Route::resource('admin', UserController::class);
-//connecter un utilisateur 
-Route::post("/login", [UserController::class, 'login']);
 //deconnecter un utilisateur 
 Route::post("/logout", [UserController::class, 'logout']);
 //regeneration du token jwt
