@@ -1,0 +1,40 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "api gestion de candidature",
+        "description": "Cet api va permettre de decentraliser la gestion des candidatures des futures apprenants de simplon semnegal",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Récupère la liste des utilisateurs",
+                "description": "Renvoie une liste de tous les utilisateurs",
+                "operationId": "7e2f5799553ec93c9c43e2a58490d447",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs récupérée avec succès"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    },
+                    "403": {
+                        "description": "Interdit"
+                    },
+                    "404": {
+                        "description": "Non trouvé"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Utilisateurs",
+            "description": "Opérations liées aux utilisateurs"
+        }
+    ]
+}

@@ -21,10 +21,20 @@ class CandidatureController extends Controller
         ]);
     }
 
+    public function userCandidatures(Request $request){
+        foreach ($request->user()->candidatures as $candidature) {
+            $candidatures[]=$candidature;
+        }
+        return response()->json([
+            'message'=>'Voici vos candidatures',
+            'candidatures'=>$candidatures
+        ]);
+    }
+
     
     public function accepter()
     {
-        $candidatures=Candidature::where('statut','accepte');
+        $candidatures=Candidature::where('statut','accepte')->get();
         return response()->json([
             "message"=>"Voici la listes de toutes les candidatures qui on été accepté",
             "candidatures"=>$candidatures
@@ -32,7 +42,7 @@ class CandidatureController extends Controller
     }
     public function en_attente()
     {
-        $candidatures=Candidature::where('statut','en attente');
+        $candidatures=Candidature::where('statut','en attente')->get();
         return response()->json([
             "message"=>"Voici la listes de toutes les candidatures qui sont en attente",
             "candidatures"=>$candidatures
@@ -42,7 +52,7 @@ class CandidatureController extends Controller
 
     public function refuser()
     {
-        $candidatures=Candidature::where('statut','refuse');
+        $candidatures=Candidature::where('statut','refuse')->get();
         return response()->json([
             "message"=>"Voici la listes de toutes les candidatures qui on été refusé",
             "candidatures"=>$candidatures
@@ -62,6 +72,7 @@ class CandidatureController extends Controller
      */
     public function store(Request $request ,Formation $formation)
     {
+
         $candidature=Candidature::create([
             "user_id"=>$request->user()->id,
             "formation_id"=>$formation->id
@@ -92,9 +103,6 @@ class CandidatureController extends Controller
         $candidature->update([
             "statut"=>"refuse"  
         ]);
-    //    $user=$candidature->user;
-    //    $user->notify(new CandidatureAccepté());
-
         return response()->json([
             "message"=>"Le refus de la candidature a reussi",
             "candidature"=>$candidature
@@ -109,8 +117,6 @@ class CandidatureController extends Controller
         $candidature->update([
             "statut"=>"accepte"  
         ]);
-    //    $user=$candidature->user;
-    //    $user->notify(new CandidatureAccepté());
 
         return response()->json([
             "message"=>"La candidature a bien été accepté",

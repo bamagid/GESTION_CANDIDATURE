@@ -13,7 +13,7 @@ class FormationController extends Controller
      */
     public function index()
     {
-        $formations = Formation::where('is_deleted', false)->get;
+        $formations = Formation::where('is_deleted', false)->get();
         return response()->json([
             'status' => true,
             "message" => "Voici la liste des formations disponible",
@@ -28,26 +28,26 @@ class FormationController extends Controller
     {
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "accepte") {
-                return $candidature;
+        
+               $candidatures[]=$candidature;
             }
         }
-
         return response()->json([
             "message" => "Les candidatures de cette formations qui ont été accepté sont les suivants ",
-            "candidature" => $candidature
+            "candidature" => $candidatures
         ]);
     }
     public function candidature_en_attente(Formation $formation)
     {
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "en attente") {
-                return $candidature;
+                $candidatures[]=$candidature;
             }
         }
 
         return response()->json([
             "message" => "Les candidatures de cette formations qui sont en attente sont les suivants ",
-            "candidature" => $candidature
+            "candidature" => $candidatures
         ]);
     }
 
@@ -112,12 +112,12 @@ class FormationController extends Controller
     {
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "refuse") {
-                return $candidature;
+                $candidatures[]=$candidature;
             }
         }
         return response()->json([
             "message" => "Les candidatures de cette formations qui ont été refusé sont les suivants ",
-            "candidature" => $candidature
+            "candidatures" => $candidatures
         ]);
     }
 
