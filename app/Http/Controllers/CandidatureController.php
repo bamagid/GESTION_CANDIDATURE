@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidature;
+use App\Models\Formation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CandidatureController extends Controller
 {
@@ -12,7 +14,39 @@ class CandidatureController extends Controller
      */
     public function index()
     {
-        //
+        $candidatures=Candidature::all();
+        return response()->json([
+            "message"=>"Voici la listes de toutes les candidatures",
+            "candidatures"=>$candidatures
+        ]);
+    }
+
+    
+    public function accepter()
+    {
+        $candidatures=Candidature::where('statut','accepte');
+        return response()->json([
+            "message"=>"Voici la listes de toutes les candidatures qui on été accepté",
+            "candidatures"=>$candidatures
+        ]);
+    }
+    public function en_attente()
+    {
+        $candidatures=Candidature::where('statut','en attente');
+        return response()->json([
+            "message"=>"Voici la listes de toutes les candidatures qui sont en attente",
+            "candidatures"=>$candidatures
+        ]);
+    }
+    
+
+    public function refuser()
+    {
+        $candidatures=Candidature::where('statut','refuse');
+        return response()->json([
+            "message"=>"Voici la listes de toutes les candidatures qui on été refusé",
+            "candidatures"=>$candidatures
+        ]);
     }
 
     /**
@@ -26,9 +60,16 @@ class CandidatureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request ,Formation $formation)
     {
-        //
+        $candidature=Candidature::create([
+            "user_id"=>$request->user()->id,
+            "formation_id"=>$formation->id
+        ]);
+        return response()->json([
+            "message"=>"La candidature a bien été pris en compte on vous enverras un message si elle a eté accepté ou refuser pour vous en informer",
+            "candidature"=>$candidature
+        ]);
     }
 
     /**
@@ -36,7 +77,11 @@ class CandidatureController extends Controller
      */
     public function show(Candidature $candidature)
     {
-        //
+        return response()->json([
+            "message"=>"Voici la candidature que vous chercher",
+            "candidature"=>$candidature
+        ]);
+        
     }
 
     /**
@@ -44,7 +89,16 @@ class CandidatureController extends Controller
      */
     public function edit(Candidature $candidature)
     {
-        //
+        $candidature->update([
+            "statut"=>"refuse"  
+        ]);
+    //    $user=$candidature->user;
+    //    $user->notify(new CandidatureAccepté());
+
+        return response()->json([
+            "message"=>"Le refus de la candidature a reussi",
+            "candidature"=>$candidature
+        ]);
     }
 
     /**
@@ -52,7 +106,16 @@ class CandidatureController extends Controller
      */
     public function update(Request $request, Candidature $candidature)
     {
-        //
+        $candidature->update([
+            "statut"=>"accepte"  
+        ]);
+    //    $user=$candidature->user;
+    //    $user->notify(new CandidatureAccepté());
+
+        return response()->json([
+            "message"=>"La candidature a bien été accepté",
+            "candidature"=>$candidature
+        ]);
     }
 
     /**
@@ -60,6 +123,9 @@ class CandidatureController extends Controller
      */
     public function destroy(Candidature $candidature)
     {
-        //
+        $candidature->delete();
+        return response()->json([
+            "message"=>"Cette candidature a été bien supprimer",
+        ]);
     }
 }
