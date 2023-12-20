@@ -16,14 +16,5 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    /**
-     * @OA\SecurityScheme(
-     *     securityScheme="bearerAuth",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT",
-     *     description="En-tête d’autorisation JWT utilisant le schéma Bearer. Example: \"Authorization: Bearer {token}\""
-     * )
-     */
     use AuthorizesRequests, ValidatesRequests;
 }

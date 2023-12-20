@@ -29,6 +29,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->role_id==2) {
+            return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
+        }
         $validator= Validator::make(
             $request->all(),[
                 'nomRole'=>'required|unique:roles'
@@ -71,6 +74,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if (auth()->user()->role_id==2) {
+            return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
+        }
         $role->delete();
         return response()->json([
             "message" => "Le role a été supprimé avec succès"
