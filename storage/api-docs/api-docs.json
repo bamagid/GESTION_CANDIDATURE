@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "",
-        "description": "",
-        "version": ""
+        "title": "Api simplon Senegal",
+        "description": "Cet api permet de gerer les candidatures que simplon senegal recoit pour leurs differentes formations",
+        "version": "1.0.0"
     },
     "components": {
         "securitySchemes": {
@@ -19,17 +19,13 @@
           "BearerAuth": []
         }
       ], 
-    "consumes": [
-        "application/json"
-    ],
+    "consumes": ["application/json"],
     "paths": {
         "/api/users/candidatures": {
             "get": {
                 "summary": "mes candidatures",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -37,9 +33,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
@@ -58,9 +52,7 @@
             "get": {
                 "summary": "Lister les candidatures d'un candidat en particulier",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -68,9 +60,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
@@ -84,9 +74,7 @@
             "get": {
                 "summary": "lister les candidatures refusées ",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -94,9 +82,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
@@ -110,9 +96,7 @@
             "get": {
                 "summary": "lister les candidatures en attente ",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -120,9 +104,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
@@ -132,13 +114,11 @@
                 ]
             }
         },
-        "/refuser": {
+        "api/candidatures/refuser": {
             "put": {
                 "summary": "Refuser une candidature",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -146,25 +126,26 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "",
+                        "type": "string"
                     }
                 ]
             }
         },
-        "/accepter": {
+        "api/candidatures/accepter/": {
             "put": {
                 "summary": "Accepter une candidature",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -172,25 +153,26 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "",
+                        "type": "string"
                     }
                 ]
             }
         },
-        "/candidatures": {
+        "api/candidatures": {
             "post": {
                 "summary": "ajouter une candidature ",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -198,9 +180,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "header",
@@ -215,13 +195,11 @@
                 ]
             }
         },
-        "/": {
+        "api/formation": {
             "get": {
                 "summary": "lister une formation en particulier",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -229,9 +207,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Formations"
-                ],
+                "tags": ["Formations"],
                 "parameters": [
                     {
                         "in": "query",
@@ -250,60 +226,65 @@
                     }
                 ]
             },
-            "delete": {
-                "summary": "Supprimer un role",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
+            "api/roles": {
+                "delete": {
+                    "summary": "Supprimer un role",
+                    "description": "",
+                    "produces": ["application/json"],
+                    "responses": {
+                        "200": {
+                            "examples": {
+                                "application/json": ""
+                            }
                         }
-                    }
-                },
-                "tags": [
-                    "Utilisateurs"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            },
-            "post": {
-                "summary": "modifier une formation",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
+                    },
+                    "tags": ["Utilisateurs"],
+                    "parameters": [
+                        {
+                            "in": "header",
+                            "name": "User-Agent",
+                            "type": "string"
+                        },
+                        {
+                            "in": "query",
+                            "name": "",
+                            "type": "string"
                         }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
+                    ]
+                }
             },
+            "api/formation/": {
+                "post": {
+                    "summary": "modifier une formation",
+                    "description": "",
+                    "produces": ["application/json"],
+                    "responses": {
+                        "200": {
+                            "examples": {
+                                "application/json": ""
+                            }
+                        }
+                    },
+                    "tags": ["Formations"],
+                    "parameters": [
+                        {
+                            "in": "header",
+                            "name": "User-Agent",
+                            "type": "string"
+                        },
+                        {
+                            "in": "query",
+                            "name": "",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "api/users":{
             "put": {
                 "summary": "modifier les infos  d'un candidat",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -311,13 +292,16 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
+                        "type": "string"
+                    } ,
+                    {
+                        "in": "query",
+                        "name": "",
                         "type": "string"
                     }
                 ],
@@ -347,14 +331,12 @@
                     }
                 }
             }
-        },
+        }},
         "/api/candidatures": {
             "get": {
                 "summary": "Lister toutes le candidatures",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -362,9 +344,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Candidatures"
-                ],
+                "tags": ["Candidatures"],
                 "parameters": [
                     {
                         "in": "query",
@@ -383,9 +363,7 @@
             "post": {
                 "summary": "Ajouter une formation",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -393,25 +371,46 @@
                         }
                     }
                 },
-                "tags": [
-                    "Formations"
-                ],
+                "tags": ["Formations"],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "libelle": "string",
+                                    "description": "string",
+                                    "dateCloture": "string",
+                                    "dateDebut": "string",
+                                    "duree": "string",
+                                    "image": "string"
+                                }
+                            },
+                            "example": {
+                                "libelle": "string",
+                                "description": "string",
+                                "dateCloture": "string",
+                                "dateDebut": "string",
+                                "duree": "string",
+                                "image": "string"
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/formations": {
             "get": {
                 "summary": "Liste des formations",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -419,9 +418,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Formations"
-                ],
+                "tags": ["Formations"],
                 "parameters": [
                     {
                         "in": "header",
@@ -435,9 +432,7 @@
             "post": {
                 "summary": "Ajouter un role",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -445,25 +440,36 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
                     }
-                ]
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nomRole": "string"
+                                }
+                            },
+                            "example": {
+                                "nomRole": "string"
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/refresh_token": {
             "post": {
                 "summary": "regenerer le token",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -471,9 +477,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
@@ -492,9 +496,7 @@
             "get": {
                 "summary": "se deconnecter ",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -502,9 +504,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
@@ -523,9 +523,7 @@
             "post": {
                 "summary": "connecter un utilisateur",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -533,9 +531,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
@@ -566,9 +562,7 @@
             "post": {
                 "summary": "inscrire un candidat",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -576,9 +570,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
@@ -617,9 +609,7 @@
             "post": {
                 "summary": "inscrire un admin",
                 "description": "",
-                "produces": [
-                    "application/json"
-                ],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "examples": {
@@ -627,9 +617,7 @@
                         }
                     }
                 },
-                "tags": [
-                    "Utilisateurs"
-                ],
+                "tags": ["Utilisateurs"],
                 "parameters": [
                     {
                         "in": "header",
