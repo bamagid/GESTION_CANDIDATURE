@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Api gestion candidature Simplon Senegal",
-        "description": "Cet api va vous permettre de gerer  les candidatures  des futur apprenants de simplon senegal",
-        "version": "0.0.1"
+        "title": "",
+        "description": "",
+        "version": ""
     },
     "components": {
         "securitySchemes": {
@@ -54,7 +54,7 @@
                 ]
             }
         },
-        "/api/candidatures/acceptees": {
+        "/api/acceptees": {
             "get": {
                 "summary": "Lister les candidatures d'un candidat en particulier",
                 "description": "",
@@ -80,7 +80,7 @@
                 ]
             }
         },
-        "/api/candidatures/refusees": {
+        "/api/refusees": {
             "get": {
                 "summary": "lister les candidatures refusées ",
                 "description": "",
@@ -106,7 +106,7 @@
                 ]
             }
         },
-        "/api/candidatures/en_attente": {
+        "/api/en_attente": {
             "get": {
                 "summary": "lister les candidatures en attente ",
                 "description": "",
@@ -132,7 +132,7 @@
                 ]
             }
         },
-        "/api/candidatures/3/refuser": {
+        "/refuser": {
             "put": {
                 "summary": "Refuser une candidature",
                 "description": "",
@@ -158,7 +158,7 @@
                 ]
             }
         },
-        "/api/candidatures/3/accepter": {
+        "/accepter": {
             "put": {
                 "summary": "Accepter une candidature",
                 "description": "",
@@ -184,7 +184,7 @@
                 ]
             }
         },
-        "/api/formations/3/candidatures": {
+        "/candidatures": {
             "post": {
                 "summary": "ajouter une candidature ",
                 "description": "",
@@ -215,61 +215,9 @@
                 ]
             }
         },
-        "/api/candidatures/3": {
+        "/": {
             "get": {
-                "summary": "lister une candidature en particulier ",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Candidatures"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/candidatures": {
-            "get": {
-                "summary": "Lister toutes le candidatures",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Candidatures"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/formations/candidature_accepter/2": {
-            "get": {
-                "summary": "lister les candidatures acceptées d'une formation",
+                "summary": "lister une formation en particulier",
                 "description": "",
                 "produces": [
                     "application/json"
@@ -286,83 +234,10 @@
                 ],
                 "parameters": [
                     {
-                        "in": "header",
-                        "name": "User-Agent",
+                        "in": "query",
+                        "name": "",
                         "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/formations/candidature_en_attente/2": {
-            "get": {
-                "summary": "lister les candidatures en attente d'une formation",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/formations/candidature_refuser/2": {
-            "get": {
-                "summary": "lister les candidatures acceptées d'une formation",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/archive_formation/2": {
-            "post": {
-                "summary": "Archiver une formation",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
+                    },
                     {
                         "in": "header",
                         "name": "User-Agent",
@@ -374,11 +249,9 @@
                         "type": "string"
                     }
                 ]
-            }
-        },
-        "/api/formation/1": {
+            },
             "delete": {
-                "summary": "Supprimer une formation",
+                "summary": "Supprimer un role",
                 "description": "",
                 "produces": [
                     "application/json"
@@ -391,17 +264,12 @@
                     }
                 },
                 "tags": [
-                    "Formations"
+                    "Utilisateurs"
                 ],
                 "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
-                        "type": "string"
-                    },
-                    {
-                        "in": "header",
-                        "name": "Authorization",
                         "type": "string"
                     }
                 ]
@@ -427,10 +295,85 @@
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
+                    }
+                ]
+            },
+            "put": {
+                "summary": "modifier les infos  d'un candidat",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "examples": {
+                            "application/json": ""
+                        }
+                    }
+                },
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nom": "string",
+                                    "prenom": "string",
+                                    "adresse": "string",
+                                    "telephone": "string",
+                                    "email": "string",
+                                    "password": "string"
+                                }
+                            },
+                            "example": {
+                                "nom": "benjamin",
+                                "prenom": "kayunga aussi",
+                                "adresse": "mermoz",
+                                "telephone": "715223581",
+                                "email": "magid1@gmail.com",
+                                "password": "Paasemoi15@"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/candidatures": {
+            "get": {
+                "summary": "Lister toutes le candidatures",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "examples": {
+                            "application/json": ""
+                        }
+                    }
+                },
+                "tags": [
+                    "Candidatures"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "",
+                        "type": "string"
                     },
                     {
                         "in": "header",
-                        "name": "Authorization",
+                        "name": "User-Agent",
                         "type": "string"
                     }
                 ]
@@ -458,73 +401,6 @@
                         "in": "header",
                         "name": "User-Agent",
                         "type": "string"
-                    },
-                    {
-                        "in": "header",
-                        "name": "Authorization",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/cloture_formation/2": {
-            "post": {
-                "summary": "Cloturer une formation ",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    },
-                    {
-                        "in": "header",
-                        "name": "Authorization",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/formation/2": {
-            "get": {
-                "summary": "lister une formation en particulier",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Formations"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    },
-                    {
-                        "in": "header",
-                        "name": "Authorization",
-                        "type": "string"
                     }
                 ]
             }
@@ -545,6 +421,32 @@
                 },
                 "tags": [
                     "Formations"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "post": {
+                "summary": "Ajouter un role",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "examples": {
+                            "application/json": ""
+                        }
+                    }
+                },
+                "tags": [
+                    "Utilisateurs"
                 ],
                 "parameters": [
                     {
@@ -587,7 +489,7 @@
             }
         },
         "/api/logout": {
-            "post": {
+            "get": {
                 "summary": "se deconnecter ",
                 "description": "",
                 "produces": [
@@ -652,7 +554,7 @@
                                 }
                             },
                             "example": {
-                                "email": "magid@gmail.com",
+                                "email": "bamagid60@gmail.com",
                                 "password": "Paasemoi15@"
                             }
                         }
@@ -755,57 +657,6 @@
                                 "adresse": "mermoz",
                                 "telephone": "715223581",
                                 "email": "binta@gmail.com",
-                                "password": "Paasemoi15@"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/users/3": {
-            "put": {
-                "summary": "modifier les infos  d'un candidat",
-                "description": "",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "examples": {
-                            "application/json": ""
-                        }
-                    }
-                },
-                "tags": [
-                    "Utilisateurs"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "nom": "string",
-                                    "prenom": "string",
-                                    "adresse": "string",
-                                    "telephone": "string",
-                                    "email": "string",
-                                    "password": "string"
-                                }
-                            },
-                            "example": {
-                                "nom": "benjamin",
-                                "prenom": "kayunga aussi",
-                                "adresse": "mermoz",
-                                "telephone": "715223581",
-                                "email": "magid1@gmail.com",
                                 "password": "Paasemoi15@"
                             }
                         }
