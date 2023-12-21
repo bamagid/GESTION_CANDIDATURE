@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidature;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,13 +27,13 @@ class FormationController extends Controller
      */
     public function candidature_accepter(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "accepte") {
-        
-               $candidatures[]=$candidature;
+
+                $candidatures[] = $candidature;
             }
         }
         return response()->json([
@@ -42,12 +43,12 @@ class FormationController extends Controller
     }
     public function candidature_en_attente(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "en attente") {
-                $candidatures[]=$candidature;
+                $candidatures[] = $candidature;
             }
         }
 
@@ -62,7 +63,7 @@ class FormationController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $validator = Validator::make(
@@ -119,12 +120,12 @@ class FormationController extends Controller
      */
     public function candidature_refuser(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         foreach ($formation->candidatures as $candidature) {
             if ($candidature->statut === "refuse") {
-                $candidatures[]=$candidature;
+                $candidatures[] = $candidature;
             }
         }
         return response()->json([
@@ -138,7 +139,7 @@ class FormationController extends Controller
      */
     public function update(Request $request, Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $validator = Validator::make(
@@ -184,7 +185,7 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $formation->delete();
@@ -192,9 +193,22 @@ class FormationController extends Controller
             'message' => 'La formation a bien été supprimée'
         ]);
     }
+    public function candidats_formation(Formation $formation)
+    {
+        //recupère les formations liées à l'utilisateur connecté et ses candidatures associés
+        $candidatures = $formation->candidatures;
+       
+        foreach ($candidatures as $candidature) {
+          $candidats[]=$candidature->user;
+        }
+        return response()->json([
+            "message"=>"La liste des candidats pour une formations",
+            "candidats" => $candidats
+        ]);
+    }
     public function archive(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $formation->is_deleted = true;
@@ -208,7 +222,7 @@ class FormationController extends Controller
     }
     public function cloturer(Formation $formation)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $formation->cloturer_ou_pas = true;

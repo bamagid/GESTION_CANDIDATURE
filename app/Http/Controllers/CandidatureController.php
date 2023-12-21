@@ -56,6 +56,9 @@ class CandidatureController extends Controller
     }
     public function en_attente()
     {
+        if (auth()->user()->role_id==2) {
+            return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
+        }                     
         $candidatures=Candidature::where('statut','en attente')->get();
         return response()->json([
             "message"=>"Voici la listes de toutes les candidatures qui sont en attente",

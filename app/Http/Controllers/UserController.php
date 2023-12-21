@@ -46,6 +46,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $candidats=User::where('role_id',2)->get();
+        return response()->json([
+            "message"=>"La liste de tous les candidats",
+            'candidats'=>$candidats
+        ]);
     }
 
     /**
