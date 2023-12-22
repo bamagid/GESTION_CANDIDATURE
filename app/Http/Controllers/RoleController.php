@@ -6,6 +6,12 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="Roles",
+ *     description="Opérations liées aux roles"
+ * )
+ */
 class RoleController extends Controller
 {
     /**
@@ -25,24 +31,40 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/roles",
+     *     summary="Ajouter un rôle",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "nomRole": "string"
+     *             }
+     *         )
+     *     ),
+     *    security={{ "BearerAuth": {} }} ,
+     *     tags={"Roles"}
+     * )
      */
     public function store(Request $request)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
-        $validator= Validator::make(
-            $request->all(),[
-                'nomRole'=>'required|unique:roles'
-            ]);
-        $role =Role::create([
-            "nomRole"=>$request->nomRole
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nomRole' => 'required|unique:roles'
+            ]
+        );
+        $role = Role::create([
+            "nomRole" => $request->nomRole
         ]);
         return response()->json([
             "message" => "Le role a été ajouté avec succès",
-            "nomRole"=>$role
-        ],201);
+            "nomRole" => $role
+        ], 201);
     }
 
     /**
@@ -66,7 +88,6 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-       
     }
 
     /**
@@ -74,12 +95,12 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (auth()->user()->role_id==2) {
+        if (auth()->user()->role_id == 2) {
             return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
         }
         $role->delete();
         return response()->json([
             "message" => "Le role a été supprimé avec succès"
-    ]);
+        ]);
     }
 }

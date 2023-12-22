@@ -7,10 +7,21 @@ use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="Formations",
+ *     description="Opérations liées aux Formations"
+ * )
+ */
 class FormationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/formations",
+     *     summary="Lister toutes les formations",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     tags={"Formations"}
+     * )
      */
     public function index()
     {
@@ -23,7 +34,16 @@ class FormationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @OA\Get(
+     *     path="/api/formations/candidature_accepter/{formation}",
+     *     summary="Voir les candidatures acceptées pour une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *      tags={"Formations"}
+     * )
      */
     public function candidature_accepter(Formation $formation)
     {
@@ -41,6 +61,17 @@ class FormationController extends Controller
             "candidature" => $candidatures
         ]);
     }
+    /**
+     * @OA\Get(
+     *     path="/api/formations/candidature_en_attente/",
+     *     summary="Voir les candidatures  en attente pour une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *        tags={"Formations"}
+     * )
+     */
     public function candidature_en_attente(Formation $formation)
     {
         if (auth()->user()->role_id == 2) {
@@ -59,7 +90,29 @@ class FormationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/formation",
+     *     summary="Ajouter une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "libelle": "string",
+     *                 "description": "string",
+     *                 "dateCloture": "string",
+     *                 "dateDebut": "string",
+     *                 "duree": "string",
+     *                 "image": "string"
+     *             }
+     *         )
+     *     ),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
      */
     public function store(Request $request)
     {
@@ -103,7 +156,17 @@ class FormationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/formation/{formation}",
+     *     summary="Obtenir les détails d'une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\Response(response="404", description="Formation non trouvée", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *      tags={"Formations"}
+     * )
      */
     public function show(Formation $formation)
     {
@@ -116,7 +179,16 @@ class FormationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @OA\Get(
+     *     path="/api/formations/candidature_refuser/{formation}",
+     *     summary="Voir les candidatures refuser pour une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
      */
     public function candidature_refuser(Formation $formation)
     {
@@ -135,7 +207,30 @@ class FormationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     *     path="api/formation/{formation}",
+     *     summary="Modifier une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     
+     *     @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     * *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "libelle": "string",
+     *                 "description": "string",
+     *                 "dateCloture": "string",
+     *                 "dateDebut": "string",
+     *                 "duree": "string",
+     *                 "image": "string"
+     *             }
+     *         )
+     *     ),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
      */
     public function update(Request $request, Formation $formation)
     {
@@ -181,7 +276,17 @@ class FormationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/formation/{formation}",
+     *     summary="Supprimer une formation via son id",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *
+     *     @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *     security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
      */
     public function destroy(Formation $formation)
     {
@@ -193,19 +298,44 @@ class FormationController extends Controller
             'message' => 'La formation a bien été supprimée'
         ]);
     }
+    /**
+     * @OA\Get(
+     *     path="/api/candidats/{formation}",
+     *     summary="Obtenir les candidats d'une formations",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\Response(response="404", description="Candidat non trouvée", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
+     */
     public function candidats_formation(Formation $formation)
     {
         //recupère les formations liées à l'utilisateur connecté et ses candidatures associés
         $candidatures = $formation->candidatures;
-       
+
         foreach ($candidatures as $candidature) {
-          $candidats[]=$candidature->user;
+            $candidats[] = $candidature->user;
         }
         return response()->json([
-            "message"=>"La liste des candidats pour une formations",
+            "message" => "La liste des candidats pour une formations",
             "candidats" => $candidats
         ]);
     }
+    /**
+     * @OA\Get(
+     *     path="/api/archive_formation/{formation}",
+     *     summary="Archiver une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *  security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
+     */
     public function archive(Formation $formation)
     {
         if (auth()->user()->role_id == 2) {
@@ -220,6 +350,18 @@ class FormationController extends Controller
             ]
         );
     }
+    /**
+     * @OA\Get(
+     *     path="/api/cloture_formation/{formation}",
+     *     summary="Clôturer une formation",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *   @OA\Parameter(in="path", name="formation", @OA\Schema(type="string")),
+     *   security={
+     *         {"BearerAuth": {}}
+     *     },
+     *   tags={"Formations"}
+     * )
+     */
     public function cloturer(Formation $formation)
     {
         if (auth()->user()->role_id == 2) {
