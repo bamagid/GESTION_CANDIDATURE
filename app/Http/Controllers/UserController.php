@@ -19,37 +19,25 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-
     /**
      * @OA\Get(
-     *     path="/users",
-     *     tags={"Utilisateurs"},
-     *     summary="Récupère la liste des utilisateurs",
-     *     description="Renvoie une liste de tous les utilisateurs",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Liste des utilisateurs récupérée avec succès"
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Non autorisé"
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Interdit"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Non trouvé"
-     *     )
+     *     path="/api/user",
+     *     summary="Afficher la liste de tous les candidats de la plateforme", 
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *    security={{ "BearerAuth": {} }} ,
+     *  tags={"Utilisateurs"}
      * )
      */
+
     public function index()
     {
-        $candidats=User::where('role_id',2)->get();
+        if (auth()->user()->role_id == 2) {
+            return response()->json(['message' => 'Vous n\'avez pas les droits pour faire cette action'], 403);
+        }
+        $candidats = User::where('role_id', 2)->get();
         return response()->json([
-            "message"=>"La liste de tous les candidats",
-            'candidats'=>$candidats
+            "message" => "La liste de tous les candidats",
+            'candidats' => $candidats
         ]);
     }
 
@@ -60,14 +48,31 @@ class UserController extends Controller
     {
         //
     }
-
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/users",
+     *     summary="Enregistrer un candidat ", 
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "nom": "string",
+     *                 "prenom": "string",
+     *                 "adresse": "string",
+     *                 "telephone": "string",
+     *                 "email": "string",
+     *                 "password": "string"
+     *             }
+     *         )
+     *     ),
+     *    security={{ "BearerAuth": {} }} ,
+     *  tags={"Utilisateurs"}
+     * )
      */
     public function store(Request $request)
     {
 
-        // data validation
         $validator = Validator::make($request->all(), [
             "nom" => "required|alpha",
             "prenom" => "required|regex:/^[a-zA-z ]+$/",
@@ -80,7 +85,6 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // User Model
         User::create([
             "nom" => $request->nom,
             "prenom" => $request->prenom,
@@ -99,9 +103,7 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(User $user)
     {
         $userdata = auth()->user();
@@ -118,16 +120,35 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/user/{user}",
+     *     summary="Modifier les infos d'un candidat",
+     *   
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *
+     *     @OA\Parameter(in="path", name="user", @OA\Schema(type="string")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "nom": "string",
+     *                 "prenom": "string",
+     *                 "adresse": "string",
+     *                 "telephone": "string",
+     *                 "email": "string",
+     *                 "password": "string"
+     *             }
+     *         )
+     *     ),
+     *    security={{ "BearerAuth": {} }} ,
+     *  tags={"Utilisateurs"}
+     * )
      */
     public function update(Request $request, User $user)
     {
-        // Validation
-        // data validation
         $validator = Validator::make($request->all(), [
             "nom" => "required|alpha",
             "prenom" => "required|regex:/^[a-zA-z ]+$/",
@@ -152,7 +173,7 @@ class UserController extends Controller
         return response()->json([
             "status" => true,
             "message" => "Informations modifiées avec succès !",
-            "candidat"=>$user
+            "candidat" => $user
         ], 201);
     }
 
@@ -164,11 +185,27 @@ class UserController extends Controller
         //
     }
 
-    // User Login (POST, formdata)
+
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Connecter un utilisateur",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "email": "string",
+     *                 "password": "string"
+     *             }
+     *         )
+     *     ),
+     *    security={{ "BearerAuth": {} }} ,
+     * tags={"Utilisateurs"}
+     * )
+     */
     public function login(Request $request)
     {
-
-        // data validation
         $validator = Validator::make($request->all(), [
             "email" => "required|email",
             "password" => "required"
@@ -197,8 +234,15 @@ class UserController extends Controller
             "message" => "Ces infos ne correspondent a aucun de nos utilisateurs"
         ], 404);
     }
-
-    // Regenerer le token jwt 
+    /**
+     * @OA\Post(
+     *     path="/api/refresh_token",
+     *     summary="Regénérer le token",  
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *    security={{ "BearerAuth": {} }},
+     *     tags={"Utilisateurs"}
+     * )
+     */
     public function refreshToken()
     {
 
@@ -211,7 +255,16 @@ class UserController extends Controller
         ]);
     }
 
-    //Deconnexion de l'utilisateur
+    /**
+     * @OA\Get(
+     *     path="/api/logout",
+     *     summary="Se déconnecter",
+     *   
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *    security={{ "BearerAuth": {} }} ,
+     * tags={"Utilisateurs"}
+     * )
+     */
     public function logout()
     {
 

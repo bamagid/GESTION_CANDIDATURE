@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-   
-    /**
-     * @OA\Get(
-     *     path="/users",
-     *     tags={"Utilisateurs"},
-     *     summary="Récupère la liste des utilisateurs",
-     *     description="Renvoie une liste de tous les utilisateurs",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Liste des utilisateurs récupérée avec succès"
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Non autorisé"
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Interdit"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Non trouvé"
-     *     )
-     * )
-     */
     public function index()
     {
     }
@@ -50,7 +25,26 @@ class AdminController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/admin",
+     *     summary="Inscrire un admin",
+     *     @OA\Response(response="200", description="Succès", @OA\JsonContent(example="")),
+     *     @OA\Parameter(in="header", name="User-Agent", @OA\Schema(type="string")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             example={
+     *                 "nom": "string",
+     *                 "prenom": "string",
+     *                 "adresse": "string",
+     *                 "telephone": "string",
+     *                 "email": "string",
+     *                 "password": "string"
+     *             }
+     *         )
+     *     ),
+     *      tags={"Utilisateurs"}
+     * )
      */
     public function store(Request $request)
     {
@@ -106,5 +100,4 @@ class AdminController extends Controller
     {
         //
     }
-
 }

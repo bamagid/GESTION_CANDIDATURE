@@ -28,7 +28,7 @@ Route::post("/users", [UserController::class, 'store']);
 Route::middleware('auth:api')->group(function () {
     /*Route pour la gestion des candidatures */
     // Route pour enregistrer une nouvelle candidature
-    Route::post('/formations/{formation}/candidatures', [CandidatureController::class, 'store']);
+    Route::get('/formations/candidatures/{formation}', [CandidatureController::class, 'store']);
     // Route pour voir les candidatures d'un apprenant
     Route::get('/users/candidatures', [CandidatureController::class, 'userCandidatures']);
     // Route pour afficher la liste de toutes les candidatures
@@ -42,9 +42,9 @@ Route::middleware('auth:api')->group(function () {
     // Route pour afficher la liste des candidatures refusées
     Route::get('refusees', [CandidatureController::class, 'refuser']);
     // Route pour refuser une candidature
-    Route::put('/candidatures/{candidature}/refuser', [CandidatureController::class, 'edit']);
+    Route::put('/candidatures/refuser/{candidature}', [CandidatureController::class, 'edit']);
     // Route pour accepter une candidature
-    Route::put('/candidatures/{candidature}/accepter', [CandidatureController::class, 'update']);
+    Route::put('/candidatures/accepter/{candidature}', [CandidatureController::class, 'update']);
     /*Route pour la gestion des formations */
     // Route pour afficher les candidatures acceptées pour une formation
     Route::get('/formations/candidature_accepter/{formation}', [FormationController::class, 'candidature_accepter']);
